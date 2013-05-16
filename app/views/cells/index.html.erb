@@ -1,0 +1,25 @@
+<h1>Cell List</h1>
+<div>
+    <table id="mice">
+        <thead>
+            <tr><th>Experiment Number</th> <th>Brain Area</th>           <th>Cell Type</th> <th>Recording Channel</th> <th>Depth</th> <th>intracellular</th> <th>layer</th> <th>pipette offset</th> <th>pipette resistance</th> <th>temperature</th> <th>mouse</th> </tr>
+        </thead>
+        <tbody>
+            <% @cells.each do |cell| %>
+            <tr>
+                <td><%= cell.experiment_number %></td>
+                <td><%= cell.brain_area %></td>
+                <td><%= cell.cell_type %></td>
+                <td><%= cell.channel%></td>
+                <td><%= cell.depth %>
+                <td><%= cell.intracellular %></td>
+                <td><%= cell.layer %></td>
+                <td><%= cell.pipette_offset %></td>
+                <td><%= cell.pipette_resistance %></td>
+                <td><%= cell.temparature %></td>
+                <td><%= link_to cell.mouse.number, mouse_path(cell.mouse) %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

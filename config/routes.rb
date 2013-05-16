@@ -1,4 +1,18 @@
 Experiments::Application.routes.draw do
+
+#  get "cell/index"
+
+#  get "cell/create"
+
+#  get "cell/delete"
+
+  devise_for :users
+
+  resources :mice
+  resources :surgeries, only: [:create, :destroy]
+  resources :cells, only: [:create, :destroy, :index]
+  root :to => 'mice#index'
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

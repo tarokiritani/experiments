@@ -1,0 +1,22 @@
+<h1>Mouse List</h1>
+
+<div>
+    <table id="mice">
+        <thead>
+            <tr><th>ID</th><th>Date of Birth</th><th>Sex</th><th>Cage Number</th><th>strain</th></tr>
+        </thead>
+        <tbody>
+        <% @mice.each do |mouse| %>
+        <tr>
+            <td><%= link_to "%03d" % mouse.number, mouse_path(mouse) %></td>
+            <td><%= mouse.date_of_birth.to_s[0..9] %></td>
+            <td><%= mouse.sex %></td>
+            <td><%= mouse.cage_number %></td>
+            <td><%= mouse.species_strain%></td>
+        </tr>
+        <% end %>
+        </tbody>
+
+    </table>
+    <%= link_to "new mouse", new_mouse_path %>
+</div>

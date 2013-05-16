@@ -1,0 +1,23 @@
+<h1>Update mouse profile</h1>
+
+<div>
+    <div>
+        <%= form_for(@mouse) do |f| %>
+            <%= f.label :date_of_birth %>
+            <%= f.date_select :date_of_birth %>
+            
+            <%= f.label :sex %>
+            <% sex_options = ["male", "female", "unknown"] %>
+            <%= f.select :sex, sex_options %>
+            
+            <%= f.label :species_strain %>
+            <% species_options = ["mouse-c57/bl6", "tdTomato"] %>
+            <%= f.select :species_strain, species_options %>
+            
+            <%= f.label :cage_number %>
+            <%= f.text_field :cage_number %>
+               
+            <%= f.submit "update mouse info" %>
+        <% end %>
+    </div>
+</div>
