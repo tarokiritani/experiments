@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218171329) do
+ActiveRecord::Schema.define(:version => 20130619161455) do
 
   create_table "cells", :force => true do |t|
     t.integer  "channel"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20130218171329) do
     t.datetime "updated_at",         :null => false
     t.integer  "mouse_id"
     t.string   "experiment_number"
+    t.text     "comment"
   end
 
   create_table "mice", :force => true do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130218171329) do
     t.string   "cage_number"
     t.integer  "user_id"
     t.integer  "number"
+    t.text     "comment"
   end
 
   create_table "surgeries", :force => true do |t|
@@ -51,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130218171329) do
     t.string   "surgery_type"
     t.string   "drug_application"
     t.decimal  "weight"
+    t.text     "comment"
   end
 
   create_table "users", :force => true do |t|

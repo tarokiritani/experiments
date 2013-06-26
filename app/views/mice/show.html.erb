@@ -4,7 +4,8 @@
         <ul>
             <li>Date of Birth: <%= @mouse.date_of_birth.to_s[0..9] %></li>
             <li>Sex: <%= @mouse.sex %></li>
-            <li>Cage Number:<%= @mouse.cage_number %></li>
+            <li>Cage Number: <%= @mouse.cage_number %></li>
+			<li>Comment: <%= @mouse.comment %></li>
         </ul>
         <%= link_to "edit", edit_mouse_path(@mouse) %>
         <%= link_to "delete", @mouse, method: :delete, confirm: "You sure?" %>
@@ -14,7 +15,7 @@
     <% if surgeries.count != 0 %>
     <h2>Surgeries </h2>
     <table>
-        <tr><th>Location</th><th>Surgery Type</th><th>Amount (ul)</th><th>Operation Date</th><th>Titer</th><th>Drugs</th><th>Weight (g)</th></tr>
+        <tr><th>Location</th><th>Surgery Type</th><th>Amount (ul)</th><th>Operation Date</th><th>Titer</th><th>Drugs</th><th>Weight (g)</th><th>Comment</th></tr>
     <% surgeries.count.times do |n| %>
         <tr>
             <td><%= surgeries[n].location %></td>
@@ -24,6 +25,7 @@
             <td><%= surgeries[n].titer %></td>
             <td><%= surgeries[n].drug_application %></td>
             <td><%= surgeries[n].weight %></td>
+			<td><%= surgeries[n].comment %></td>
             <td><%= link_to 'delete', surgeries[n], :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
             
         </tr>
@@ -37,9 +39,8 @@
         <%= f.text_field :location %>
         
         <%= f.label :surgery_type %>
-        <% injected_object = ["lumafluor red", "lumafluor blue", "CTB488", "implantation", "craniotomy", "euthanasia"] %>
-        <%= f.select :surgery_type, injected_object %>
-                
+        <%= f.select :surgery_type, Surgery::SURGERY_OPTIONS %>
+        
         <%= f.label :operation_date %>
         <%= f.date_select :operation_date %>
         
@@ -52,6 +53,9 @@
         <%= f.label :weight %>
         <%= f.text_field :weight %>
         
+		<%= f.label :comment %>
+        <%= f.text_field :comment %>
+		
         <%= f.hidden_field :mouse_id %>
 
         
@@ -62,7 +66,7 @@
     <% if cells.count != 0 %>
     <h2>Cells</h2>
     <table>
-        <tr><th>Channel</th><th>Cell Type</th><th>Brain Area</th><th>Layer</th><th>Intracellular</th><th>Pipette Offset</th><th>Pipette Resistance</th><th>Depth</th><th>Temperature</th><th>Experiment Number</th></tr>
+        <tr><th>Channel</th><th>Cell Type</th><th>Brain Area</th><th>Layer</th><th>Intracellular</th><th>Pipette Offset</th><th>Pipette Resistance</th><th>Depth</th><th>Temperature</th><th>Experiment Number</th><th>Comment</th></tr>
     <% cells.count.times do |n| %>
         <tr>
             <td><%= cells[n].channel %></td>
@@ -75,6 +79,7 @@
             <td><%= cells[n].depth %></td>
             <td><%= cells[n].temparature %></td>
             <td><%= cells[n].experiment_number %></td>
+			<td><%= cells[n].comment %></td>
             <td><%= link_to 'delete', cells[n], :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
             
         </tr>
@@ -89,8 +94,7 @@
         <%= f.text_field :channel %>
         
         <%= f.label :cell_type %>
-        <% types = ["pyramid", "interneuron", "unknown"] %>
-        <%= f.select :cell_type, types %>
+        <%= f.select :cell_type, Cell::TYPE_OPTIONS %>
                 
         <%= f.label :brain_area %>
         <%= f.text_field :brain_area %>
@@ -100,8 +104,7 @@
         <%= f.select :layer, layers %>
         
         <%= f.label :intracellular %>
-        <% intrasolutions = ["gluconate"]%>
-        <%= f.select :intracellular, intrasolutions %>
+        <%= f.select :intracellular, Cell::INTRACELLUAR_OPTIONS %>
         
         <%= f.label :pipette_offset %>
         <%= f.text_field :pipette_offset %>
@@ -117,7 +120,10 @@
         
         <%= f.label :experiment_number %>
         <%= f.text_field :experiment_number %>
-                
+        
+		<%= f.label :comment %>
+        <%= f.text_field :comment %>
+        
         <%= f.hidden_field :mouse_id %>
 
         <%= f.submit "add cell" %>
