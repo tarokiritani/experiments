@@ -1,5 +1,11 @@
 Experiments::Application.routes.draw do
 
+#  get "analysis/show"
+
+#  get "analysis/create"
+
+#  get "analyses/index"
+
 #  get "cell/index"
 
 #  get "cell/create"
@@ -7,10 +13,11 @@ Experiments::Application.routes.draw do
 #  get "cell/delete"
 
   devise_for :users
-
+  
+  resources :analyses, only: [:create, :destroy, :index, :edit, :update]
   resources :mice
   resources :surgeries, only: [:create, :destroy]
-  resources :cells, only: [:create, :destroy, :index]
+  resources :cells, only: [:create, :destroy, :index, :show]
   root :to => 'mice#index'
     
   # The priority is based upon order of creation:

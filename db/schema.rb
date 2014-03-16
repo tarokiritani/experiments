@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619161455) do
+ActiveRecord::Schema.define(:version => 20130829154547) do
+
+  create_table "analyses", :force => true do |t|
+    t.string   "file"
+    t.string   "analysis_type"
+    t.string   "comment"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "cell_id"
+  end
 
   create_table "cells", :force => true do |t|
     t.integer  "channel"

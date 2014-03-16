@@ -21,9 +21,14 @@ def create
   end
 end
 
-def delete
+def destroy
   @mouse = Cell.find(params[:id]).mouse
   Cell.find(params[:id]).destroy
   redirect_to @mouse
+end
+
+def show
+  @cell = Cell.find(params[:id].to_i)
+  @analysis = @cell.analyses.build
 end
 end

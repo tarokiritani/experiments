@@ -6,6 +6,7 @@
             <li>Sex: <%= @mouse.sex %></li>
             <li>Cage Number: <%= @mouse.cage_number %></li>
 			<li>Comment: <%= @mouse.comment %></li>
+			<li>Strain: <%= @mouse.species_strain %> </li>
         </ul>
         <%= link_to "edit", edit_mouse_path(@mouse) %>
         <%= link_to "delete", @mouse, method: :delete, confirm: "You sure?" %>
@@ -13,27 +14,29 @@
     
     <% surgeries = @mouse.surgeries %>
     <% if surgeries.count != 0 %>
-    <h2>Surgeries </h2>
+    <h2>Operations</h2>
     <table>
         <tr><th>Location</th><th>Surgery Type</th><th>Amount (ul)</th><th>Operation Date</th><th>Titer</th><th>Drugs</th><th>Weight (g)</th><th>Comment</th></tr>
-    <% surgeries.count.times do |n| %>
+    <% surgeries.each do |n| %>
+		<% if !n.new_record? %>
         <tr>
-            <td><%= surgeries[n].location %></td>
-            <td><%= surgeries[n].surgery_type %></td>
-            <td><%= surgeries[n].amount_in_ul %></td>
-            <td><%= surgeries[n].operation_date %></td>
-            <td><%= surgeries[n].titer %></td>
-            <td><%= surgeries[n].drug_application %></td>
-            <td><%= surgeries[n].weight %></td>
-			<td><%= surgeries[n].comment %></td>
-            <td><%= link_to 'delete', surgeries[n], :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
-            
+			<% dateDifference = n.operation_date - Date.parse(@mouse.date_of_birth.to_s[0..9]) %>
+            <td><%= n.location %></td>
+            <td><%= n.surgery_type %></td>
+            <td><%= n.amount_in_ul %></td>
+            <td><%= n.operation_date %> (<%= dateDifference.to_i %>d)</td>
+            <td><%= n.titer %></td>
+            <td><%= n.drug_application %></td>
+            <td><%= n.weight %></td>
+			<td><%= n.comment %></td>
+            <td><%= link_to 'delete', n, :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
         </tr>
+		<% end %>
     <% end %>
     </table>
     <% end %>
     
-    <h2>Add Surgery Data</h2>
+    <h2>Add Operation Data</h2>
     <%= form_for(@surgery) do |f| %>
         <%= f.label :location %>
         <%= f.text_field :location %>
@@ -64,31 +67,33 @@
     
     <% cells = @mouse.cells %>
     <% if cells.count != 0 %>
-    <h2>Cells</h2>
+    <h2>Recordings</h2>
     <table>
         <tr><th>Channel</th><th>Cell Type</th><th>Brain Area</th><th>Layer</th><th>Intracellular</th><th>Pipette Offset</th><th>Pipette Resistance</th><th>Depth</th><th>Temperature</th><th>Experiment Number</th><th>Comment</th></tr>
-    <% cells.count.times do |n| %>
-        <tr>
-            <td><%= cells[n].channel %></td>
-            <td><%= cells[n].cell_type %></td>
-            <td><%= cells[n].brain_area %></td>
-            <td><%= cells[n].layer %></td>
-            <td><%= cells[n].intracellular %></td>
-            <td><%= cells[n].pipette_offset %></td>
-            <td><%= cells[n].pipette_resistance %></td>
-            <td><%= cells[n].depth %></td>
-            <td><%= cells[n].temparature %></td>
-            <td><%= cells[n].experiment_number %></td>
-			<td><%= cells[n].comment %></td>
-            <td><%= link_to 'delete', cells[n], :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
-            
-        </tr>
+    <% cells.each do |n| %>
+		<% if !n.new_record? %>
+			<tr>
+				<td><%= n.channel %></td>
+				<td><%= n.cell_type %></td>
+				<td><%= n.brain_area %></td>
+				<td><%= n.layer %></td>
+				<td><%= n.intracellular %></td>
+				<td><%= n.pipette_offset %></td>
+				<td><%= n.pipette_resistance %></td>
+				<td><%= n.depth %></td>
+				<td><%= n.temparature %></td>
+				<td><%= n.experiment_number %></td>
+				<td><%= n.comment %></td>
+				<td><%= link_to 'delete', n, :confirm => 'Are you sure you want to delete this surgery record?', :method => :delete %>
+				<td><%= link_to 'show', n%></td>
+			</tr>
+		<% end %>
     <% end %>
     </table>
     <% end %>
     
     
-    <h2>Add Cell Data</h2>
+    <h2>Add Recording Data</h2>
     <%= form_for(@cell) do |f| %>
         <%= f.label :channel %>
         <%= f.text_field :channel %>
@@ -100,7 +105,7 @@
         <%= f.text_field :brain_area %>
         
         <%= f.label :layer %>
-        <% layers = ["L1", "L2/3", "L4", "L5", "L6", "unknown"]%>
+        <% layers = ["L1", "L2/3", "L4", "L5", "L6", "unknown", "NA"]%>
         <%= f.select :layer, layers %>
         
         <%= f.label :intracellular %>

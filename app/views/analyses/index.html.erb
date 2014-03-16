@@ -1,0 +1,17 @@
+<h1>Analysis List</h1>
+<div>
+    <table id="mice">
+        <thead>
+            <tr><th>Type</th> <th>file</th> <th>mouse info</th> </tr>
+        </thead>
+        <tbody>
+            <% @analyses.each do |a| %>
+            <tr>
+                <td><%= a.analysis_type %></td>
+                <td><%= a.file %></td>
+                <td><%= link_to a.cell.mouse.number, mouse_path(a.cell.mouse) %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
